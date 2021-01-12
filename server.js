@@ -25,6 +25,18 @@ router.get("/user/:id", async (ctx) => {
   ctx.body = users[ctx.params.id];
 });
 
-app.use(router.allowedMethods()).use(router.routes()).use(bodyParser());
+router.put("/user/:id", (ctx) => {
+  const userId = ctx.params.id;
+  const newData =
+    ctx.request.body; /* not accessible if we don't `.use(bodyParser())` */
+  ctx.body = Object.assign(users[userId], newData);
+});
+
+/*
+Because the way that middleware works is sequentially,
+in the next instruction it is important
+to call `app.use(bodyParser())` before any of the other middleware [units].
+*/
+app.use(bodyParser()).use(router.allowedMethods()).use(router.routes());
 
 app.listen(3000);

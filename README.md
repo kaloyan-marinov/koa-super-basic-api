@@ -13,4 +13,13 @@ $ curl localhost:3000/user/1
 {"name":"Kenny","email":"kenny@example.net"}
 $ curl localhost:3000/user/2
 {"name":"Joe","email":"joe@example.org"}
+
+$ curl \
+  -X PUT \
+  -H "Content-Type: application/json" \
+  -d '{"name": "Peter", "email": "peter@yahoo.com"}' \
+  localhost:3000/user/1
+{"name":"Peter","email":"peter@yahoo.com"}
+$ curl localhost:3000/user/1
+{"name":"Peter","email":"peter@yahoo.com"}
 ```
