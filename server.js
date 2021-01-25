@@ -6,26 +6,29 @@ const app = new Koa();
 const router = new Router();
 
 // Pretend the following list is a database.
-let users = [
-  {
-    name: "Jacob",
-    email: "info@geeklaunch.net",
+let users = {
+  1: {
+    id: 1,
+    username: "jd-user",
+    name: "John Doe",
+    email: "john.doe@gmail.com",
+    password: "123",
   },
-  {
-    name: "Kenny",
-    email: "kenny@example.net",
+  2: {
+    id: 2,
+    username: "user-ms",
+    name: "Mary Smith",
+    email: "mary.smith@yahoo.com",
+    password: "789",
   },
-  {
-    name: "Joe",
-    email: "joe@example.org",
-  },
-];
+};
 
-router.get("/user/:id", async (ctx) => {
-  ctx.body = users[ctx.params.id];
+router.get("/users/:id", async (ctx) => {
+  const { id, name, username, password, email } = users[ctx.params.id];
+  ctx.body = { id, username };
 });
 
-router.put("/user/:id", (ctx) => {
+router.put("/users/:id", (ctx) => {
   const userId = ctx.params.id;
   const newData =
     ctx.request.body; /* not accessible if we don't `.use(bodyParser())` */
